@@ -1,0 +1,439 @@
+/* Блок hero (главный экран) */
+.hero {
+    padding-top: 180px;
+    padding-bottom: 120px;
+    padding-left: 10%;
+    padding-right: 10%;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Заголовок H1 */
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 90px;
+    line-height: 0.9;
+    color: #c46b7b;
+    animation: fadeInUp 1s ease;
+}
+
+/* Акцентная часть текста */
+.hero span {
+    color: #333;
+    display: block;
+    font-size: 0.8em;
+}
+
+/* Абзац под заголовком */
+.hero p {
+    margin-top: 30px;
+    font-size: 18px;
+    color: #666;
+    line-height: 1.8;
+    max-width: 500px;
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+/* Стили кнопок */
+.btn {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 16px 38px;
+    border-radius: 50px;
+    background: #c46b7b;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    animation: fadeInUp 1s ease 0.4s both;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Эффект волны при наведении на кнопку */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+/* Ховер для кнопки */
+.btn:hover {
+    background: #a95563;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(201, 106, 120, 0.3);
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Изображение в hero */
+.hero img {
+    width: 100%;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s;
+    animation: fadeInRight 1s ease;
+}
+
+.hero img:hover {
+    transform: scale(1.02);
+}
+
+/* Блок услуг */
+.services {
+    padding: 120px 10%;
+    background: linear-gradient(to bottom, transparent, rgba(196, 107, 123, 0.03));
+}
+
+/* Заголовок блока услуг */
+.services h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    margin-bottom: 20px;
+    color: #c46b7b;
+    text-align: center;
+    position: relative;
+}
+
+/* Декоративная полоска под заголовком */
+.services h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #c46b7b;
+}
+
+/* Сетка карточек услуг */
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+}
+
+/* Карточка услуги */
+.service {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Верхняя полоса при наведении */
+.service::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, #c46b7b, #e6a4b0);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+}
+
+.service:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 45px rgba(196, 107, 123, 0.15);
+}
+
+.service:hover::before {
+    transform: translateX(0);
+}
+
+.service h3 {
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #333;
+}
+
+.service p {
+    color: #777;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Блок галереи */
+.gallery {
+    padding: 120px 10%;
+}
+
+.gallery h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    margin-bottom: 20px;
+    color: #c46b7b;
+    text-align: center;
+    position: relative;
+}
+
+.gallery h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #c46b7b;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 25px;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.gallery img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    transition: transform 0.5s;
+    display: block;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Затемнение при наведении */
+.gallery-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.gallery-item:hover::after {
+    opacity: 1;
+}
+
+/* Акционный блок */
+.promo {
+    padding: 80px 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.promo-box {
+    background: linear-gradient(135deg, #fff3f6, #fff);
+    padding: 60px 50px;
+    border-radius: 35px;
+    box-shadow: 0 20px 40px rgba(196, 107, 123, 0.1);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Декоративный круг в углу */
+.promo-box::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 150px;
+    height: 150px;
+    background: rgba(196, 107, 123, 0.1);
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.promo-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 50px rgba(196, 107, 123, 0.2);
+}
+
+.promo-box:hover::before {
+    transform: scale(1.2);
+}
+
+.promo-box h3 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: #c46b7b;
+    font-family: 'Playfair Display', serif;
+}
+
+.promo-box p {
+    color: #666;
+    font-size: 18px;
+}
+
+/* Блок команды */
+.team {
+    padding: 120px 10%;
+    background: linear-gradient(to bottom, rgba(196, 107, 123, 0.02), transparent);
+}
+
+.team h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    margin-bottom: 20px;
+    color: #c46b7b;
+    text-align: center;
+    position: relative;
+}
+
+.team h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #c46b7b;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+}
+
+/* Карточка сотрудника */
+.member {
+    text-align: center;
+    background: white;
+    padding: 30px 20px 30px;
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.member:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 45px rgba(196, 107, 123, 0.15);
+}
+
+.member img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 5px solid #fff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.member:hover img {
+    transform: scale(1.05);
+}
+
+.member h4 {
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.member span {
+    font-size: 16px;
+    color: #c46b7b;
+    font-weight: 500;
+}
+
+/* Анимации */
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Адаптив для планшетов */
+@media (max-width: 1200px) {
+    .hero h1 {
+        font-size: 70px;
+    }
+}
+
+/* Адаптив для планшетов вертикально */
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 150px;
+    }
+    
+    .hero p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero h1 span {
+        display: inline;
+    }
+    
+    .promo {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Адаптив для телефонов */
+@media (max-width: 600px) {
+    .hero h1 {
+        font-size: 50px;
+    }
+    
+    .services h2,
+    .gallery h2,
+    .team h2 {
+        font-size: 42px;
+    }
+    
+    .promo-box {
+        padding: 40px 30px;
+    }
+}
