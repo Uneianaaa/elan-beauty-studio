@@ -206,6 +206,9 @@ function getDiscountBadge($promotion) {
             <p>10:00 – 21:00</p>
             <p>Ежедневно</p>
         </div>
+        <div class="copyright">
+            <p>© 2026 ÉLAN Beauty Studio. Все права защищены</p>
+        </div>
     </footer>
 
     <script src="js/promotions.js"></script>
