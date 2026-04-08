@@ -321,6 +321,38 @@ function createBurgerMenuElements() {
     }
 }
 
+// Функция открытия модального окна с отзывом
+function openReviewForm(specialistId) {
+    const modal = document.getElementById('reviewFormModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+// Функция закрытия модального окна с отзывом
+function closeReviewModal() {
+    const modal = document.getElementById('reviewFormModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Закрытие при клике на крестик
+document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.querySelector('.modal .close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeReviewModal);
+    }
+    
+    // Закрытие при клике вне окна
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('reviewFormModal');
+        if (e.target === modal) {
+            closeReviewModal();
+        }
+    });
+});
+
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     addAnimationStyles();
@@ -331,3 +363,4 @@ document.addEventListener('DOMContentLoaded', () => {
         initScrollAnimations('.service, .gallery-item, .member, .promo-box');
     }
 });
+

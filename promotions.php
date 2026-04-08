@@ -106,8 +106,6 @@ function getDiscountBadge($promotion) {
                                         <?= htmlspecialchars($promo['conditions']) ?>
                                     </div>
                                 <?php endif; ?>
-                                
-                                <button class="btn-promo" onclick="openBooking(<?= $promo['id'] ?>)">Записаться</button>
                             </div>
                         </div>
                     <?php endforeach; ?>
