@@ -406,43 +406,6 @@ tr:hover td {
     background: #c46b7b;
 }
 
-/* FOOTER */
-footer {
-    background: #fff;
-    padding: 80px 10%;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 40px;
-    border-top: 1px solid #eee;
-    position: relative;
-    overflow: hidden;
-    margin-top: 60px;
-}
-
-footer::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(to right, #c46b7b, #e6a4b0);
-}
-
-footer h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    color: #c46b7b;
-    margin-bottom: 15px;
-}
-
-footer p {
-    color: #777;
-    margin-top: 10px;
-    font-size: 16px;
-}
-
 /* Уведомления */
 .notification {
     position: fixed;
