@@ -88,3 +88,66 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Склонение слова "отзыв"
+function declineReviews(count) {
+    const num = Math.abs(count);
+    const lastDigit = num % 10;
+    const lastTwoDigits = num % 100;
+    
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+        return num + ' отзывов';
+    }
+    
+    if (lastDigit === 1) {
+        return num + ' отзыв';
+    }
+    
+    if (lastDigit >= 2 && lastDigit <= 4) {
+        return num + ' отзыва';
+    }
+    
+    return num + ' отзывов';
+}
+
+// Применяем склонение при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    const reviewsCount = document.getElementById('reviews-count');
+    const reviewsText = document.getElementById('reviews-text');
+    
+    if (reviewsCount && reviewsText) {
+        const count = parseInt(reviewsCount.textContent);
+        const declined = declineReviews(count);
+        const parts = declined.split(' ');
+        reviewsCount.textContent = parts[0];
+        reviewsText.textContent = parts[1];
+    }
+});
+
+// Склонение имени специалиста на странице
+function initNameDeclension() {
+    const bookingTitle = document.querySelector('.booking-title');
+    const dativeSpan = document.querySelector('.specialist-dative');
+    const modalDativeSpan = document.querySelector('.specialist-dative-modal');
+    
+    if (bookingTitle && dativeSpan) {
+        const fullName = bookingTitle.dataset.name;
+        if (fullName) {
+            dativeSpan.textContent = getNameInDative(fullName);
+        }
+    }
+    
+    if (modalDativeSpan) {
+        // Берём имя из заголовка страницы или из data-атрибута
+        const specialistNameElem = document.querySelector('.profile-name');
+        if (specialistNameElem) {
+            const fullName = specialistNameElem.textContent;
+            modalDativeSpan.textContent = getNameInDative(fullName);
+        }
+    }
+}
+
+// Запускаем склонение после загрузки страницы
+document.addEventListener('DOMContentLoaded', () => {
+    initNameDeclension();
+});

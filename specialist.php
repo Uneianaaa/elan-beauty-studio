@@ -1,92 +1,6 @@
 <?php
 require_once 'config.php';
 
-// Функция склонения ФИО в дательный падеж (кому? о ком?)
-function getNameInDative($fullName) {
-    // Разбиваем на имя и фамилию
-    $parts = explode(' ', $fullName);
-    if (count($parts) < 2) {
-        return $fullName;
-    }
-    
-    $firstName = $parts[0];
-    $lastName = $parts[1];
-    
-    // Склонение имени
-    $firstNameDative = declineFirstName($firstName);
-    
-    // Склонение фамилии
-    $lastNameDative = declineLastName($lastName);
-    
-    return $firstNameDative . ' ' . $lastNameDative;
-}
-
-// Склонение имени
-function declineFirstName($name) {
-    $exceptions = [
-        'Анна' => 'Анне', 'Елена' => 'Елене', 'Мария' => 'Марии',
-        'Дарья' => 'Дарье', 'Ольга' => 'Ольге', 'Наталья' => 'Наталье',
-        'Юлия' => 'Юлии', 'Виктория' => 'Виктории', 'Александра' => 'Александре',
-        'Екатерина' => 'Екатерине', 'Светлана' => 'Светлане', 'Татьяна' => 'Татьяне',
-        'Ирина' => 'Ирине', 'Анастасия' => 'Анастасии', 'Кристина' => 'Кристине',
-        'Алина' => 'Алине', 'Вероника' => 'Веронике', 'Людмила' => 'Людмиле',
-        'Евгения' => 'Евгении', 'Алёна' => 'Алёне', 'Валерия' => 'Валерии',
-        'Диана' => 'Диане', 'Карина' => 'Карине', 'Лилия' => 'Лилии',
-        'Маргарита' => 'Маргарите', 'Полина' => 'Полине', 'София' => 'Софии',
-        'Яна' => 'Яне', 'Кира' => 'Кире'
-    ];
-    
-    if (isset($exceptions[$name])) {
-        return $exceptions[$name];
-    }
-    
-    $lastChar = mb_substr($name, -1);
-    if ($lastChar === 'а') {
-        return mb_substr($name, 0, -1) . 'е';
-    } elseif ($lastChar === 'я') {
-        return mb_substr($name, 0, -1) . 'е';
-    } elseif (mb_substr($name, -2) === 'ия') {
-        return mb_substr($name, 0, -2) . 'ии';
-    }
-    
-    return $name;
-}
-
-// Склонение фамилии
-function declineLastName($lastName) {
-    // Исключения для фамилий
-    $exceptions = [
-        'Смирнова' => 'Смирновой',
-        'Волкова' => 'Волковой',
-        'Иванова' => 'Ивановой',
-        'Петрова' => 'Петровой',
-        'Соколова' => 'Соколовой',
-        'Новикова' => 'Новиковой',
-        'Морозова' => 'Морозовой',
-        'Козлова' => 'Козловой',
-        'Лебедева' => 'Лебедевой',
-        'Павлова' => 'Павловой'
-    ];
-    
-    if (isset($exceptions[$lastName])) {
-        return $exceptions[$lastName];
-    }
-    
-    // Если фамилия заканчивается на "а" или "я", меняем на "ой" или "ей"
-    $lastChar = mb_substr($lastName, -1);
-    $lastTwoChars = mb_substr($lastName, -2);
-    
-    if ($lastChar === 'а') {
-        return mb_substr($lastName, 0, -1) . 'ой';
-    } elseif ($lastChar === 'я') {
-        return mb_substr($lastName, 0, -1) . 'ей';
-    } elseif ($lastTwoChars === 'ия') {
-        return mb_substr($lastName, 0, -2) . 'ии';
-    }
-    
-    return $lastName;
-}
-
 // Получаем ID специалиста из адресной строки
 $specialist_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -227,7 +141,7 @@ $month_names = ['', 'Январь', 'Февраль', 'Март', 'Апрель'
                     </div>
                     <div class="stat">
                         <span class="stat-value"><?= $avg_rating ?></span>
-                        <span class="stat-label">рейтинг (<?= $total_reviews ?> отзывов)</span>
+                        <span class="stat-label">рейтинг (<span id="reviews-count"><?= $total_reviews ?></span> <span id="reviews-text">отзывов</span>)</span>
                     </div>
                 </div>
 
@@ -261,7 +175,7 @@ $month_names = ['', 'Январь', 'Февраль', 'Март', 'Апрель'
     <!-- Форма записи -->
     <section id="booking" class="booking-section">
         <div class="container">
-            <h2>Быстрая запись к <?= htmlspecialchars(getNameInDative($specialist['name'])) ?></h2>
+            <h2 class="booking-title" data-name="<?= htmlspecialchars($specialist['name']) ?>">Быстрая запись к <span class="specialist-dative"></span></h2>
             <div class="quick-booking-form">
                 <form action="booking.php" method="GET">
                     <input type="hidden" name="specialist_id" value="<?= $specialist_id ?>">
@@ -355,7 +269,7 @@ $month_names = ['', 'Январь', 'Февраль', 'Март', 'Апрель'
     <div id="reviewFormModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Оставить отзыв о <?= htmlspecialchars(getNameInDative($specialist['name'])) ?></h3>
+            <h3>Оставить отзыв о <span class="specialist-dative-modal"></span></h3>
             <form action="add-review.php" method="POST" class="review-form">
                 <input type="hidden" name="specialist_id" value="<?= $specialist_id ?>">
                 

@@ -82,6 +82,111 @@ function initScrollTop() {
     });
 }
 
+// Функция склонения слова "отзыв"
+function declineReviews(count) {
+    if (count === null || count === undefined) return '0 отзывов';
+    
+    const num = Math.abs(count);
+    const lastDigit = num % 10;
+    const lastTwoDigits = num % 100;
+    
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+        return num + ' отзывов';
+    }
+    
+    if (lastDigit === 1) {
+        return num + ' отзыв';
+    }
+    
+    if (lastDigit >= 2 && lastDigit <= 4) {
+        return num + ' отзыва';
+    }
+    
+    return num + ' отзывов';
+}
+
+// Склонение имени в дательный падеж
+function declineFirstName(name) {
+    const exceptions = {
+        'Анна': 'Анне', 'Елена': 'Елене', 'Мария': 'Марии',
+        'Дарья': 'Дарье', 'Ольга': 'Ольге', 'Наталья': 'Наталье',
+        'Юлия': 'Юлии', 'Виктория': 'Виктории', 'Александра': 'Александре',
+        'Екатерина': 'Екатерине', 'Светлана': 'Светлане', 'Татьяна': 'Татьяне',
+        'Ирина': 'Ирине', 'Анастасия': 'Анастасии', 'Кристина': 'Кристине',
+        'Алина': 'Алине', 'Вероника': 'Веронике', 'Людмила': 'Людмиле',
+        'Евгения': 'Евгении', 'Алёна': 'Алёне', 'Валерия': 'Валерии',
+        'Диана': 'Диане', 'Карина': 'Карине', 'Лилия': 'Лилии',
+        'Маргарита': 'Маргарите', 'Полина': 'Полине', 'София': 'Софии',
+        'Яна': 'Яне', 'Кира': 'Кире'
+    };
+    
+    if (exceptions[name]) {
+        return exceptions[name];
+    }
+    
+    const lastChar = name.slice(-1);
+    const lastTwoChars = name.slice(-2);
+    
+    if (lastChar === 'а') {
+        return name.slice(0, -1) + 'е';
+    } else if (lastChar === 'я') {
+        return name.slice(0, -1) + 'е';
+    } else if (lastTwoChars === 'ия') {
+        return name.slice(0, -2) + 'ии';
+    }
+    
+    return name;
+}
+
+// Склонение фамилии в дательный падеж
+function declineLastName(lastName) {
+    const exceptions = {
+        'Смирнова': 'Смирновой',
+        'Волкова': 'Волковой',
+        'Иванова': 'Ивановой',
+        'Петрова': 'Петровой',
+        'Соколова': 'Соколовой',
+        'Новикова': 'Новиковой',
+        'Морозова': 'Морозовой',
+        'Козлова': 'Козловой',
+        'Лебедева': 'Лебедевой',
+        'Павлова': 'Павловой'
+    };
+    
+    if (exceptions[lastName]) {
+        return exceptions[lastName];
+    }
+    
+    const lastChar = lastName.slice(-1);
+    const lastTwoChars = lastName.slice(-2);
+    
+    if (lastChar === 'а') {
+        return lastName.slice(0, -1) + 'ой';
+    } else if (lastChar === 'я') {
+        return lastName.slice(0, -1) + 'ей';
+    } else if (lastTwoChars === 'ия') {
+        return lastName.slice(0, -2) + 'ии';
+    }
+    
+    return lastName;
+}
+
+// Склонение полного имени в дательный падеж
+function getNameInDative(fullName) {
+    const parts = fullName.split(' ');
+    if (parts.length < 2) {
+        return fullName;
+    }
+    
+    const firstName = parts[0];
+    const lastName = parts[1];
+    
+    const firstNameDative = declineFirstName(firstName);
+    const lastNameDative = declineLastName(lastName);
+    
+    return firstNameDative + ' ' + lastNameDative;
+}
+
 // Система уведомлений
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
