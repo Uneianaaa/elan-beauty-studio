@@ -87,23 +87,31 @@ require_once 'config.php';
     </section>
 
     <!-- Блок с формой обратной связи -->
-    <section class="feedback-section">
-        <div class="container">
-            <div class="feedback-box">
-                <h2>Остались вопросы?</h2>
-                <p>Напишите нам, и мы ответим в ближайшее время</p>
-                <!-- Форма с имитацией отправки -->
-                <form class="feedback-form" onsubmit="event.preventDefault(); showNotification('Сообщение отправлено! Мы скоро свяжемся с вами', 'success'); this.reset();">
-                    <div class="form-row">
-                        <input type="text" placeholder="Ваше имя" required>
-                        <input type="tel" placeholder="Телефон" required>
-                    </div>
-                    <textarea rows="4" placeholder="Ваше сообщение" required></textarea>
-                    <button type="submit" class="btn-primary">Отправить сообщение</button>
-                </form>
-            </div>
+<section class="feedback-section">
+    <div class="container">
+        <div class="feedback-box">
+            <h2>Остались вопросы?</h2>
+            <p>Напишите нам, и мы ответим в ближайшее время</p>
+            
+            <?php if (isset($_GET['success'])): ?>
+                <div class="notification success">Сообщение отправлено! Мы скоро свяжемся с вами</div>
+            <?php endif; ?>
+            
+            <?php if (isset($_GET['error'])): ?>
+                <div class="notification error"><?= htmlspecialchars($_GET['error']) ?></div>
+            <?php endif; ?>
+            
+            <form class="feedback-form" action="send-message.php" method="POST">
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                    <input type="tel" name="phone" placeholder="Телефон" required>
+                </div>
+                <textarea name="message" rows="4" placeholder="Ваше сообщение" required></textarea>
+                <button type="submit" class="btn-primary">Отправить сообщение</button>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 
     <footer>
         <div>
