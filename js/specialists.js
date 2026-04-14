@@ -44,4 +44,22 @@ document.addEventListener('DOMContentLoaded', () => {
             specialistsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
+    // Функция склонения слова "отзыв"
+    function getReviewWord(count) {
+        count = count % 100;
+        if (count >= 11 && count <= 19) return 'отзывов';
+        const last = count % 10;
+        if (last === 1) return 'отзыв';
+        if (last >= 2 && last <= 4) return 'отзыва';
+        return 'отзывов';
+    }
+
+    // Если нужно обновить текст на странице динамически
+    document.querySelectorAll('.specialist-card').forEach(card => {
+        const reviewsCount = parseInt(card.dataset.reviewsCount);
+        const reviewsLabel = card.querySelector('.reviews-label');
+        if (reviewsLabel && !isNaN(reviewsCount)) {
+            reviewsLabel.textContent = reviewsCount + ' ' + getReviewWord(reviewsCount);
+        }
+    });
 });

@@ -5,30 +5,37 @@ require_once 'config.php';
 $stmt = $pdo->query("SELECT * FROM specialists ORDER BY specialization, name");
 $specialists = $stmt->fetchAll();
 
-// Группируем по специализации для фильтра (без изменения исходного массива)
+// Группируем по специализации для фильтра
 $groupedSpecialists = [];
 foreach ($specialists as $specialist) {
     $specialization = $specialist['specialization'];
-    // Разбиваем специализации через запятую
     $specs = explode(',', $specialization);
     foreach ($specs as $spec) {
         $spec = trim($spec);
         if (!isset($groupedSpecialists[$spec])) {
             $groupedSpecialists[$spec] = [];
         }
-        // Добавляем ID специалиста, чтобы не дублировать
         if (!in_array($specialist['id'], array_column($groupedSpecialists[$spec], 'id'))) {
             $groupedSpecialists[$spec][] = $specialist;
         }
     }
 }
 
-// Для каждого специалиста получаем количество услуг, которые он делает
+// Для каждого специалиста получаем количество услуг и средний рейтинг
 foreach ($specialists as $key => $specialist) {
+    // Количество услуг
     $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM service_specialist WHERE specialist_id = ?");
     $stmt->execute([$specialist['id']]);
     $result = $stmt->fetch();
     $specialists[$key]['services_count'] = $result['count'];
+    
+    // Средний рейтинг
+    $stmt = $pdo->prepare("SELECT AVG(rating) as avg_rating, COUNT(*) as total_reviews FROM reviews WHERE specialist_id = ? AND is_approved = TRUE");
+    $stmt->execute([$specialist['id']]);
+    $rating_result = $stmt->fetch();
+    $avg_rating = $rating_result['avg_rating'] ? round($rating_result['avg_rating'], 1) : 'Новый';
+    $specialists[$key]['avg_rating'] = $avg_rating;
+    $specialists[$key]['total_reviews'] = $rating_result['total_reviews'] ?: 0;
 }
 
 // Вспомогательная функция для склонения слова "год"
@@ -89,7 +96,8 @@ function getYearWord($years) {
     <section class="specialists-page">
         <div class="specialists-grid">
             <?php foreach ($specialists as $specialist): ?>
-                <div class="specialist-card" data-specializations="<?= htmlspecialchars($specialist['specialization']) ?>">
+                <div class="specialist-card" data-specializations="<?= htmlspecialchars($specialist['specialization']) ?>"
+                     data-reviews-count="<?= $specialist['total_reviews'] ?>">
                     <div class="specialist-image">
                         <?php if ($specialist['photo'] && file_exists($specialist['photo'])): ?>
                             <img src="<?= htmlspecialchars($specialist['photo']) ?>" alt="<?= htmlspecialchars($specialist['name']) ?>">
@@ -107,12 +115,12 @@ function getYearWord($years) {
                         <p class="specialist-specialization"><?= htmlspecialchars($specialist['specialization']) ?></p>
                         <div class="specialist-stats">
                             <div class="stat">
-                                <span class="stat-value"><?= $specialist['services_count'] ?></span>
+                                <span class="stat-value services-count"><?= $specialist['services_count'] ?></span>
                                 <span class="stat-label">услуг</span>
                             </div>
                             <div class="stat">
-                                <span class="stat-value">★</span>
-                                <span class="stat-label">4.9</span>
+                                <span class="stat-value rating-value"><?= $specialist['avg_rating'] === 'Новый' ? '★' : $specialist['avg_rating'] ?></span>
+                                <span class="stat-label reviews-label" data-count="<?= $specialist['total_reviews'] ?>">отзывов</span>
                             </div>
                         </div>
                         <div class="specialist-footer">
